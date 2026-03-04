@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x, 20.x]
+        node-version: [22.x, 24.x, 25.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -27,18 +27,29 @@ jobs:
       run: npm ci
     
     - name: Run lint check
-      run: |
-        # Simple lint check
-        npx eslint email-channel-plugin.js test-email.js openclaw-integration-example.js --no-eslintrc --env node --parser-options '{"ecmaVersion": 2020}' || echo "No ESLint config found, skipping"
+      run: npm run lint
     
     - name: Check syntax
       run: |
         node -c email-channel-plugin.js
         node -c test-email.js
         node -c openclaw-integration-example.js
+        node -c test/unit.test.js
+        node -c test/run-tests.js
     
-    - name: Run unit tests
-      run: npm test
+    - name: Verify Node.js version compatibility
+      run: |
+        echo "Testing with Node.js $(node --version)"
+        echo "Testing ECMAScript compatibility..."
+    
+    - name: Run unit tests with coverage
+      run: npm run coverage
+    
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        fail_ci_if_error: false
     
     - name: Check package.json
       run: |

@@ -5,7 +5,11 @@
   "main": "email-channel-plugin.js",
   "scripts": {
     "start": "node email-channel-plugin.js",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "node test/run-tests.js",
+    "test:unit": "node --test test/unit.test.js",
+    "test:ci": "npm test",
+    "lint": "eslint *.js test/*.js --no-eslintrc --env node --parser-options '{\"ecmaVersion\": 2023}' || echo 'No ESLint config'",
+    "coverage": "c8 node --test test/unit.test.js test/integration.test.js"
   },
   "dependencies": {
     "imap": "^0.8.19",
@@ -13,7 +17,8 @@
     "nodemailer": "^6.9.7"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^22.0.0",
+    "c8": "^10.1.2"
   },
   "keywords": [
     "openclaw",
@@ -23,17 +28,17 @@
     "imap",
     "smtp"
   ],
-  "author": "OpenClaw Community",
+  "author": "Vitaly Takmazov <vitalyster>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openclaw/openclaw-email-channel"
+    "url": "https://github.com/aibot505/openclaw-email-channel"
   },
   "bugs": {
-    "url": "https://github.com/openclaw/openclaw-email-channel/issues"
+    "url": "https://github.com/aibot505/openclaw-email-channel/issues"
   },
-  "homepage": "https://github.com/openclaw/openclaw-email-channel#readme",
+  "homepage": "https://github.com/aibot505/openclaw-email-channel#readme",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=22.0.0"
   }
 }
