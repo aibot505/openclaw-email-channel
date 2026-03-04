@@ -8,8 +8,7 @@
     "test": "node test/run-tests.js",
     "test:unit": "node --test test/unit.test.js",
     "test:ci": "npm test",
-    "lint": "eslint *.js test/*.js --no-eslintrc --env node --parser-options '{\"ecmaVersion\": 2023}' || echo 'No ESLint config'",
-    "coverage": "c8 node --test test/unit.test.js test/integration.test.js"
+    "lint": "eslint *.js test/*.js --no-eslintrc --env node --parser-options '{\"ecmaVersion\": 2023}' || echo 'No ESLint config'"
   },
   "dependencies": {
     "imap": "^0.8.17",
@@ -17,8 +16,7 @@
     "nodemailer": "^8.0.1"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "c8": "^10.1.2"
+    "@types/node": "^22.0.0"
   },
   "keywords": [
     "openclaw",
