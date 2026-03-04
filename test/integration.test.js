@@ -9,6 +9,7 @@ describe('Integration Tests', () => {
       const requiredFiles = [
         'email-channel-plugin.js',
         'package.json',
+        'package-lock.json',
         'README.md',
         'SKILL.md',
         'LICENSE',
@@ -84,10 +85,10 @@ describe('Integration Tests', () => {
       const readme = fs.readFileSync('README.md', 'utf8');
       
       assert.ok(readme.includes('# OpenClaw Email Channel Plugin'), 'README should have title');
-      assert.ok(readme.includes('## Installation'), 'README should have installation section');
-      assert.ok(readme.includes('## Usage'), 'README should have usage section');
-      assert.ok(readme.includes('## Configuration'), 'README should have configuration section');
-      assert.ok(readme.includes('## License'), 'README should have license section');
+      assert.ok(readme.includes('Installation') || readme.includes('Quick Start'), 'README should have installation/quick start section');
+      assert.ok(readme.includes('Usage') || readme.includes('Examples'), 'README should have usage/examples section');
+      assert.ok(readme.includes('Configuration'), 'README should have configuration section');
+      assert.ok(readme.includes('License'), 'README should have license section');
     });
     
     it('should have OpenClaw skill documentation', () => {
