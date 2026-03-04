@@ -1,6 +1,6 @@
 {
   "name": "openclaw-email-channel",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Email channel plugin for OpenClaw",
   "main": "email-channel-plugin.js",
   "scripts": {

@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-03-04
+
+### Added
+- GitHub Actions workflow to enforce "no release before CI passes" rule
+- Pre-release check script (`scripts/check-ci-before-release.sh`)
+- Comprehensive test suite with unit and integration tests
+- Internal release guide documentation
+- Dynamic repository detection in CI check script
+
+### Changed
+- Updated all tests to work with Node.js 22+ (removed deprecated `mock.module`)
+- Improved test structure and organization
+- Enhanced error handling in tests
+- Updated documentation structure (separated public/internal)
+
+### Fixed
+- Security vulnerabilities in dependencies (imap, nodemailer)
+- Package.json and package-lock.json synchronization issues
+- CI failures due to ES module compatibility with c8
+- Test assertions for flexible documentation structure
+
+### Security
+- Updated `imap` from ^0.8.19 to ^0.8.17 (security fix)
+- Updated `nodemailer` from ^6.9.7 to ^8.0.1 (security fix)
+- All security vulnerabilities resolved (npm audit clean)
+
 ## [1.1.0] - 2024-03-04
 
 ### Added
