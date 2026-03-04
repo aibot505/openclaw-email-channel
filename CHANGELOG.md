@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.3.0] - 2024-03-04
+## [1.3.0] - 2026-03-04
 
 ### Added
 - IMAP IDLE support for real-time email notifications (no polling)
@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🔋 **Better resource usage**: Less CPU and network usage
 - ⏱️ **Faster notifications**: Instant email delivery via IDLE
 
-## [1.2.0] - 2024-03-04
+## [1.2.0] - 2026-03-04
 
 ### Added
 - GitHub Actions workflow to enforce "no release before CI passes" rule
@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `nodemailer` from ^6.9.7 to ^8.0.1 (security fix)
 - All security vulnerabilities resolved (npm audit clean)
 
-## [1.1.0] - 2024-03-04
+## [1.1.0] - 2026-03-04
 
 ### Added
 - GitHub Actions workflow testing Node.js 22, 24, 25 matrix
@@ -79,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation inconsistencies
 - Package.json repository URLs
 
-## [1.0.0] - 2024-03-04
+## [1.0.0] - 2026-03-04
 
 ### Initial Release
 - Complete email channel plugin for OpenClaw
@@ -110,13 +110,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Secure credential handling via environment variables
 - TLS/SSL support for IMAP and SMTP
 - App password recommendations for services like Gmail
-
-## [1.0.0] - 2024-03-04
-
-### Initial Release
-- Complete email channel plugin for OpenClaw
-- Support for major email providers (Gmail, Outlook, Yahoo, etc.)
-- Production-ready with comprehensive documentation
 - MIT License
 
 ### Installation
