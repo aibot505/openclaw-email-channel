@@ -14,7 +14,7 @@ A robust email channel plugin for OpenClaw that enables sending and receiving em
 
 ```bash
 # Clone the repository
-git clone https://github.com/openclaw/openclaw-email-channel.git
+git clone https://github.com/aibot505/openclaw-email-channel.git
 cd openclaw-email-channel
 
 # Install dependencies
@@ -267,7 +267,7 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/openclaw/openclaw-email-channel/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/aibot505/openclaw-email-channel/issues)
 - **Discord**: [Join OpenClaw Community](https://discord.gg/clawd)
 - **Documentation**: [OpenClaw Docs](https://docs.openclaw.ai)
 

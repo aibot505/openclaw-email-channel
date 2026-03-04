@@ -116,7 +116,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ```bash
 npm install
 # or
-git clone https://github.com/vitalyster/openclaw-email-channel.git
+git clone https://github.com/aibot505/openclaw-email-channel.git
 ```
 
 ### Usage

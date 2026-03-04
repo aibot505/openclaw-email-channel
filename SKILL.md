@@ -340,7 +340,7 @@ tail -f /var/log/openclaw-email-channel.log
 ### Building from Source
 
 ```bash
-git clone https://github.com/openclaw/openclaw-email-channel.git
+git clone https://github.com/aibot505/openclaw-email-channel.git
 cd openclaw-email-channel
 npm install
 npm run build  # If TypeScript version exists
@@ -370,7 +370,7 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ## Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/openclaw/openclaw-email-channel/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/aibot505/openclaw-email-channel/issues)
 - **Discord Community**: [Join OpenClaw Discord](https://discord.gg/clawd)
 - **Documentation**: [OpenClaw Docs](https://docs.openclaw.ai)
 
