@@ -56,7 +56,7 @@ Add to your OpenClaw config (`~/.openclaw/config.json`):
 
 ## 📋 Features
 
-- ✅ **Real-time Email Monitoring** - IMAP integration with configurable polling
+- ✅ **Real-time Email Monitoring** - IMAP IDLE for instant notifications (no polling)
 - ✅ **Email Sending** - SMTP support with attachments and HTML
 - ✅ **Thread Support** - Proper email conversation threading
 - ✅ **Attachment Handling** - Save and send attachments

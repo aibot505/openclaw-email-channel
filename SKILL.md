@@ -8,7 +8,7 @@ This plugin enables OpenClaw to send and receive emails as a communication chann
 - **SMTP Integration**: Send emails with attachments and HTML support
 - **Thread Support**: Handle email conversations with proper threading (in-reply-to, references)
 - **Attachment Handling**: Process and save email attachments
-- **Configurable Polling**: Adjustable polling interval for checking new emails
+- **IMAP IDLE Support**: Real-time email notifications using IMAP IDLE (no polling)
 - **Multiple Recipients**: Support for TO, CC, and BCC fields
 - **HTML/Text Emails**: Send both plain text and HTML formatted emails
 - **Error Handling**: Comprehensive error handling and logging
@@ -56,10 +56,12 @@ Add to your OpenClaw configuration file (`~/.openclaw/config.json`):
         "SMTP_USER": "your-email@gmail.com",
         "SMTP_PASSWORD": "your-app-password",
         "EMAIL_ADDRESS": "your-email@gmail.com",
-        "POLL_INTERVAL": "30000",
         "MARK_SEEN": "true",
         "SAVE_ATTACHMENTS": "false",
-        "ATTACHMENTS_DIR": "./attachments"
+        "ATTACHMENTS_DIR": "./attachments",
+        "IMAP_KEEPALIVE_INTERVAL": "300000",
+        "IMAP_IDLE_INTERVAL": "60000",
+        "IMAP_FORCE_NOOP": "true"
       }
     }
   }
@@ -83,10 +85,12 @@ Add to your OpenClaw configuration file (`~/.openclaw/config.json`):
 | `SMTP_PASSWORD` | SMTP password/app password | - | `your-app-password` |
 | `SMTP_SECURE` | Use SSL/TLS for SMTP | `false` | `false` |
 | `EMAIL_ADDRESS` | Sender email address | - | `your-email@gmail.com` |
-| `POLL_INTERVAL` | Polling interval in ms | `30000` | `30000` |
 | `MARK_SEEN` | Mark emails as read | `true` | `true` |
 | `SAVE_ATTACHMENTS` | Save attachments to disk | `false` | `true` |
 | `ATTACHMENTS_DIR` | Directory for attachments | `./attachments` | `/tmp/email-attachments` |
+| `IMAP_KEEPALIVE_INTERVAL` | Keepalive interval in ms (NOOP) | `300000` | `300000` |
+| `IMAP_IDLE_INTERVAL` | IDLE timeout in ms | `60000` | `60000` |
+| `IMAP_FORCE_NOOP` | Force NOOP instead of IDLE | `true` | `true` |
 
 ### Email Provider Examples
 
@@ -101,6 +105,10 @@ SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASSWORD=your-app-password
 EMAIL_ADDRESS=your-email@gmail.com
+# IMAP IDLE settings for real-time notifications
+IMAP_KEEPALIVE_INTERVAL=300000
+IMAP_IDLE_INTERVAL=60000
+IMAP_FORCE_NOOP=true
 ```
 
 #### Outlook/Office 365

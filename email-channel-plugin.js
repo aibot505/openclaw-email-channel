@@ -21,7 +21,7 @@ class EmailChannelPlugin extends EventEmitter {
     this.imapClient = null;
     this.smtpTransporter = null;
     this.isConnected = false;
-    this.pollInterval = null;
+    this.noopInterval = null;
     
     // Validate required config
     this.validateConfig();
@@ -61,6 +61,12 @@ class EmailChannelPlugin extends EventEmitter {
       tlsOptions: this.config.imap.tlsOptions || {},
       authTimeout: this.config.imap.authTimeout || 3000,
       connTimeout: this.config.imap.connTimeout || 10000,
+      // Enable keepalive to maintain IDLE connection
+      keepalive: {
+        interval: 300000, // 5 minutes
+        idleInterval: 60000, // 1 minute
+        forceNoop: true
+      }
     });
     
     this.imapClient.on('error', (err) => {
@@ -74,8 +80,9 @@ class EmailChannelPlugin extends EventEmitter {
       this.emit('disconnected');
     });
     
+    // We'll handle new mail via IDLE instead of the 'mail' event
     this.imapClient.on('mail', (numNewMsgs) => {
-      console.log(`New email(s) received: ${numNewMsgs}`);
+      console.log(`New email(s) received via mail event: ${numNewMsgs}`);
       this.fetchNewEmails();
     });
   }
@@ -123,8 +130,8 @@ class EmailChannelPlugin extends EventEmitter {
           }
           console.log(`Connected to inbox, ${box.messages.total} messages`);
           
-          // Start polling for new emails
-          this.startPolling();
+          // Start IMAP IDLE for real-time notifications
+          this.startIdle();
           resolve();
         });
       });
@@ -133,19 +140,77 @@ class EmailChannelPlugin extends EventEmitter {
     });
   }
   
-  startPolling() {
-    // Clear existing interval
-    if (this.pollInterval) {
-      clearInterval(this.pollInterval);
+  startIdle() {
+    console.log('Starting IMAP IDLE for real-time email notifications...');
+    
+    // Initial fetch of any unseen emails
+    this.fetchNewEmails();
+    
+    // Start IDLE mode
+    this.enterIdleMode();
+  }
+  
+  enterIdleMode() {
+    if (!this.isConnected || !this.imapClient) {
+      console.log('Not connected, cannot enter IDLE mode');
+      return;
     }
     
-    // Set up polling interval (default: 30 seconds)
-    const interval = this.config.pollInterval || 30000;
-    this.pollInterval = setInterval(() => {
-      this.fetchNewEmails();
-    }, interval);
+    // Check if we should force NOOP instead of IDLE
+    const forceNoop = this.config.imap.keepalive?.forceNoop !== false;
     
-    console.log(`Started email polling every ${interval}ms`);
+    if (forceNoop) {
+      console.log('Using NOOP polling instead of IDLE (forceNoop=true)');
+      this.startNoopPolling();
+      return;
+    }
+    
+    // Enter IDLE mode
+    this.imapClient.idle((err) => {
+      if (err) {
+        console.error('IMAP IDLE error:', err);
+        console.log('Falling back to NOOP polling...');
+        this.startNoopPolling();
+        return;
+      }
+      
+      console.log('Entered IMAP IDLE mode, waiting for new emails...');
+    });
+    
+    // Handle IDLE updates
+    this.imapClient.on('update', (seqno, info) => {
+      if (info && (info.type === 'exists' || info.type === 'expunge')) {
+        console.log(`IMAP update: ${info.type}, fetching new emails...`);
+        this.fetchNewEmails();
+      }
+    });
+  }
+  
+  startNoopPolling() {
+    // Clear any existing interval
+    if (this.noopInterval) {
+      clearInterval(this.noopInterval);
+    }
+    
+    // Use keepalive interval or default to 1 minute
+    const interval = this.config.imap.keepalive?.idleInterval || 60000;
+    
+    console.log(`Starting NOOP polling every ${interval}ms`);
+    
+    this.noopInterval = setInterval(() => {
+      if (!this.isConnected || !this.imapClient) {
+        return;
+      }
+      
+      // Send NOOP to check for new emails
+      this.imapClient.noop((err) => {
+        if (err) {
+          console.error('IMAP NOOP error:', err);
+          return;
+        }
+        // NOOP will trigger 'mail' event if there are new emails
+      });
+    }, interval);
   }
   
   async fetchNewEmails() {
@@ -291,10 +356,18 @@ class EmailChannelPlugin extends EventEmitter {
   }
   
   async disconnect() {
-    // Clear polling interval
-    if (this.pollInterval) {
-      clearInterval(this.pollInterval);
-      this.pollInterval = null;
+    // Exit IDLE mode if active
+    if (this.imapClient && this.imapClient._idle && this.imapClient._idle.stopped === false) {
+      console.log('Exiting IMAP IDLE mode...');
+      this.imapClient.idleStop(() => {
+        console.log('IMAP IDLE mode stopped');
+      });
+    }
+    
+    // Clear NOOP polling interval
+    if (this.noopInterval) {
+      clearInterval(this.noopInterval);
+      this.noopInterval = null;
     }
     
     // Close IMAP connection
@@ -349,7 +422,6 @@ if (require.main === module) {
       secure: process.env.SMTP_SECURE === 'true',
     },
     emailAddress: process.env.EMAIL_ADDRESS,
-    pollInterval: parseInt(process.env.POLL_INTERVAL) || 30000,
     markSeen: process.env.MARK_SEEN !== 'false',
     saveAttachments: process.env.SAVE_ATTACHMENTS === 'true',
     attachmentsDir: process.env.ATTACHMENTS_DIR,
