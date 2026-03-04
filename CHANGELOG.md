@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-03-04
+
+### Fixed
+- Repository URL corrections in documentation
+- Updated all GitHub URLs from `openclaw/` to `aibot505/`
+- Fixed installation instructions in README.md, SKILL.md, CHANGELOG.md
+- Corrected GitHub issues links
+
+### Documentation
+- All documentation now points to correct repository: `aibot505/openclaw-email-channel`
+- Consistent repository references across all files
+- Updated clone commands and issue reporting links
+
 ## [1.3.0] - 2026-03-04
 
 ### Added
