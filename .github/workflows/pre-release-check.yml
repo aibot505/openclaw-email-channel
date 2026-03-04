@@ -1,0 +1,114 @@
+name: Pre-Release Check
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [labeled]
+  release:
+    types: [created]
+
+jobs:
+  check-ci-status:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'release'))
+    
+    steps:
+    - name: Check CI status
+      id: ci-check
+      run: |
+        echo "🔍 Checking if CI is passing before allowing release..."
+        
+        # Get the latest CI run for the Test workflow
+        LATEST_RUN=$(gh run list --repo ${{ github.repository }} --workflow test --branch ${{ github.ref_name }} --limit 1 --json conclusion,status --jq '.[0]')
+        
+        if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
+          echo "❌ No CI runs found for the Test workflow"
+          echo "::error::No CI runs found. Run tests before releasing."
+          exit 1
+        fi
+        
+        STATUS=$(echo "$LATEST_RUN" | jq -r '.status')
+        CONCLUSION=$(echo "$LATEST_RUN" | jq -r '.conclusion')
+        
+        echo "Latest Test workflow run: status=$STATUS, conclusion=$CONCLUSION"
+        
+        if [ "$STATUS" != "completed" ]; then
+          echo "❌ CI is still running"
+          echo "::error::CI is still running. Wait for it to complete."
+          exit 1
+        fi
+        
+        if [ "$CONCLUSION" != "success" ]; then
+          echo "❌ CI failed. Cannot release."
+          echo "::error::CI failed. Fix tests before releasing."
+          exit 1
+        fi
+        
+        echo "✅ CI is passing. Release can proceed."
+        
+    - name: Check for security vulnerabilities
+      run: |
+        echo "🔒 Checking for security vulnerabilities..."
+        
+        # Clone the repo to check package.json
+        git clone https://github.com/${{ github.repository }}.git repo-check
+        cd repo-check
+        
+        # Check npm audit
+        if npm audit --audit-level=high 2>/dev/null; then
+          echo "✅ No high/critical security vulnerabilities found"
+        else
+          echo "❌ Security vulnerabilities found"
+          echo "::error::Fix security vulnerabilities before releasing."
+          exit 1
+        fi
+        
+    - name: Validate package.json
+      run: |
+        echo "📦 Validating package.json..."
+        
+        git clone https://github.com/${{ github.repository }}.git repo-check
+        cd repo-check
+        
+        # Check if package.json exists and is valid JSON
+        if [ ! -f "package.json" ]; then
+          echo "❌ package.json not found"
+          echo "::error::package.json not found"
+          exit 1
+        fi
+        
+        if ! jq empty package.json 2>/dev/null; then
+          echo "❌ package.json is not valid JSON"
+          echo "::error::package.json is not valid JSON"
+          exit 1
+        fi
+        
+        # Check required fields
+        REQUIRED_FIELDS=("name" "version" "description" "main" "license")
+        for field in "${REQUIRED_FIELDS[@]}"; do
+          if ! jq -e ".${field}" package.json > /dev/null 2>&1; then
+            echo "❌ package.json missing required field: $field"
+            echo "::error::package.json missing required field: $field"
+            exit 1
+          fi
+        done
+        
+        echo "✅ package.json is valid"
+        
+    - name: Check documentation
+      run: |
+        echo "📚 Checking documentation..."
+        
+        git clone https://github.com/${{ github.repository }}.git repo-check
+        cd repo-check
+        
+        REQUIRED_DOCS=("README.md" "LICENSE")
+        for doc in "${REQUIRED_DOCS[@]}"; do
+          if [ ! -f "$doc" ]; then
+            echo "❌ Missing required documentation: $doc"
+            echo "::error::Missing required documentation: $doc"
+            exit 1
+          fi
+        done
+        
+        echo "✅ Required documentation found"

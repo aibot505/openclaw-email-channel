@@ -150,10 +150,32 @@ Example: `feat: add support for email threading`
 
 ## Release Process
 
-1. Update version in package.json
-2. Update CHANGELOG.md
-3. Create a release tag
-4. Publish to npm (if applicable)
+### **MANDATORY: CI Must Pass Before Release**
+**Never create a release when CI is failing.** This is enforced by GitHub Actions.
+
+### **Release Checklist:**
+1. **✅ CI Status**: Ensure all GitHub Actions workflows pass
+   ```bash
+   ./scripts/check-ci-before-release.sh
+   ```
+2. **✅ Update version** in package.json
+3. **✅ Update CHANGELOG.md** with release notes
+4. **✅ Commit changes** with message: `chore: release vX.Y.Z`
+5. **✅ Create tag**: `git tag -a vX.Y.Z -m 'Release vX.Y.Z'`
+6. **✅ Push tag**: `git push origin vX.Y.Z`
+7. **✅ Create GitHub release**: `gh release create vX.Y.Z --title 'vX.Y.Z' --notes-file CHANGELOG.md`
+
+### **What Happens If You Release With Failing CI:**
+- The release will be blocked by GitHub Actions
+- If bypassed, it must be reverted immediately
+- Fix CI issues first, then re-release
+
+### **Emergency Releases:**
+For critical security fixes when CI is broken:
+1. Create a hotfix branch
+2. Fix both the issue AND the CI
+3. Merge when CI passes
+4. Follow normal release process
 
 ## Questions?
 
