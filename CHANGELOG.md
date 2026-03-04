@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-03-04
+
+### Added
+- IMAP IDLE support for real-time email notifications (no polling)
+- Fallback to NOOP polling if IDLE fails or is disabled
+- Keepalive configuration for maintaining IMAP connections
+- Enhanced error handling for IMAP connection issues
+
+### Changed
+- **BREAKING**: Removed `POLL_INTERVAL` environment variable (replaced by IMAP IDLE)
+- Updated IMAP configuration with keepalive settings
+- Improved connection stability with automatic reconnection
+- Updated documentation to reflect real-time email monitoring
+
+### Fixed
+- Potential memory leaks from polling intervals
+- Connection timeout issues with long-running IMAP sessions
+- Documentation inconsistencies regarding email monitoring
+
+### Performance
+- ⚡ **Significant improvement**: Eliminated constant polling
+- 📉 **Reduced bandwidth**: Only check emails when notified by server
+- 🔋 **Better resource usage**: Less CPU and network usage
+- ⏱️ **Faster notifications**: Instant email delivery via IDLE
+
 ## [1.2.0] - 2024-03-04
 
 ### Added
