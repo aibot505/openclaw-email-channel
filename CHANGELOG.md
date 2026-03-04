@@ -7,8 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2024-03-04
+
 ### Added
-- Initial release of OpenClaw Email Channel Plugin
+- GitHub Actions workflow testing Node.js 22, 24, 25 matrix
+- Comprehensive unit tests with proper mocking
+- Integration tests for file structure and configuration
+- Test coverage reporting with Codecov integration
+- Test runner script with coverage support
+- GitHub Actions badges to README
+
+### Changed
+- Updated Node.js engine requirement from >=14.0.0 to >=22.0.0
+- Updated dev dependencies for Node.js 22 compatibility
+- Improved test structure and organization
+- Updated documentation with current requirements
+
+### Fixed
+- Test mocking for IMAP, SMTP, and mailparser dependencies
+- Documentation inconsistencies
+- Package.json repository URLs
+
+## [1.0.0] - 2024-03-04
+
+### Initial Release
+- Complete email channel plugin for OpenClaw
 - IMAP integration for receiving emails
 - SMTP integration for sending emails
 - Attachment support for sending and receiving
@@ -19,6 +42,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test script for verification
 - OpenClaw integration examples
 - Documentation (README, SKILL.md, QUICKSTART)
+- Support for major email providers (Gmail, Outlook, Yahoo, etc.)
+- Production-ready with comprehensive documentation
+- MIT License
 
 ### Features
 - Real-time email monitoring
