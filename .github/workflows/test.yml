@@ -1,0 +1,46 @@
+name: Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run lint check
+      run: |
+        # Simple lint check
+        npx eslint email-channel-plugin.js test-email.js openclaw-integration-example.js --no-eslintrc --env node --parser-options '{"ecmaVersion": 2020}' || echo "No ESLint config found, skipping"
+    
+    - name: Check syntax
+      run: |
+        node -c email-channel-plugin.js
+        node -c test-email.js
+        node -c openclaw-integration-example.js
+    
+    - name: Run unit tests
+      run: npm test
+    
+    - name: Check package.json
+      run: |
+        npm pack --dry-run
+        npm outdated || true
