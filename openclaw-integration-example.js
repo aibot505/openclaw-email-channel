@@ -192,7 +192,7 @@ async function generateDailyReport() {
   return {
     text: "Daily report content...",
     html: "<h1>Daily Report</h1><p>Content...</p>",
-    csv: "date,metric,value\n2024-01-01,users,100\n2024-01-01,requests,1000"
+    csv: "date,metric,value\n2026-01-01,users,100\n2026-01-01,requests,1000"
   };
 }
 

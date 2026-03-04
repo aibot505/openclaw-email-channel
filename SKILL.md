@@ -145,7 +145,7 @@ Example received message format:
     "subject": "Test Email",
     "text": "Hello, this is a test email.",
     "html": "<p>Hello, this is a test email.</p>",
-    "date": "2024-01-01T12:00:00.000Z",
+    "date": "2026-01-01T12:00:00.000Z",
     "attachments": [],
     "headers": {},
     "inReplyTo": null,

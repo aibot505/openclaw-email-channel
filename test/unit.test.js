@@ -107,7 +107,7 @@ describe('EmailChannelPlugin Structure', () => {
         subject: 'Test Email',
         text: 'Hello World',
         html: '<p>Hello World</p>',
-        date: new Date('2024-01-01'),
+        date: new Date('2026-01-01'),
         attachments: [],
         headers: { 'x-custom': 'value' },
         inReplyTo: 'parent-123',

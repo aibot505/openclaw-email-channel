@@ -92,7 +92,7 @@ await message({
   attachments: [
     {
       filename: "report-march.pdf",
-      path: "/reports/march-2024.pdf"
+      path: "/reports/march-2026.pdf"
     }
   ]
 });
@@ -217,7 +217,7 @@ node --inspect email-channel-plugin.js
   subject: "Email Subject",
   text: "Plain text content",
   html: "<p>HTML content</p>",
-  date: "2024-01-01T12:00:00.000Z",
+  date: "2026-01-01T12:00:00.000Z",
   attachments: [],
   headers: {},
   inReplyTo: null,
