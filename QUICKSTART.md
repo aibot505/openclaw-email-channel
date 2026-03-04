@@ -4,6 +4,10 @@ Get up and running with the email channel plugin in 5 minutes!
 
 ## 🚀 5-Minute Setup
 
+### Prerequisites
+- Node.js 22 or higher
+- npm or yarn
+
 ### Step 1: Install Dependencies
 ```bash
 npm install

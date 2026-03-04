@@ -17,14 +17,19 @@ This plugin enables OpenClaw to send and receive emails as a communication chann
 
 ### Method 1: Direct Installation
 
-1. Install dependencies:
+1. **Ensure Node.js 22 or higher** is installed:
+   ```bash
+   node --version  # Should be 22.x or higher
+   ```
+
+2. Install dependencies:
    ```bash
    npm install imap mailparser nodemailer
    ```
 
-2. Configure environment variables (see Configuration section)
+3. Configure environment variables (see Configuration section)
 
-3. Run the plugin:
+4. Run the plugin:
    ```bash
    node email-channel-plugin.js
    ```

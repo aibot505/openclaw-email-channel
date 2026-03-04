@@ -1,8 +1,10 @@
 # OpenClaw Email Channel Plugin
 
 ![OpenClaw](https://img.shields.io/badge/OpenClaw-Email%20Channel-blue)
-![Node.js](https://img.shields.io/badge/Node.js-≥14.0-green)
+![Node.js](https://img.shields.io/badge/Node.js-≥22.0-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
+![Tests](https://github.com/aibot505/openclaw-email-channel/actions/workflows/test.yml/badge.svg)
+![Release](https://img.shields.io/github/v/release/aibot505/openclaw-email-channel)
 
 A robust email channel plugin for OpenClaw that enables sending and receiving emails as a first-class communication channel.
 
