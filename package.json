@@ -12,9 +12,9 @@
     "coverage": "c8 node --test test/unit.test.js test/integration.test.js"
   },
   "dependencies": {
-    "imap": "^0.8.19",
+    "imap": "^0.8.17",
     "mailparser": "^3.6.4",
-    "nodemailer": "^6.9.7"
+    "nodemailer": "^8.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
