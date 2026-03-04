@@ -225,25 +225,6 @@ node --inspect email-channel-plugin.js
 }
 ```
 
-## 🚨 Release Rules
-
-### **Golden Rule: Never Release Before CI Passes**
-- ✅ **Always wait** for GitHub Actions CI to pass (green checkmark)
-- ✅ **Never create releases** when tests are failing
-- ✅ **Check CI status** before any version bump or tag
-
-### **Pre-Release Checklist:**
-1. **CI Status**: All workflows must pass (`Test` workflow especially)
-2. **Tests**: All unit and integration tests passing
-3. **Security**: `npm audit` shows no high/critical vulnerabilities
-4. **Documentation**: README, CHANGELOG, and SKILL.md updated
-5. **Version**: package.json version bumped appropriately
-
-### **Enforcement:**
-- GitHub Actions will block releases if CI fails
-- Use `scripts/check-ci-before-release.sh` to validate before releasing
-- Releases created while CI is failing will be reverted
-
 ## 🤝 Contributing
 
 We welcome contributions! Here's how to help:

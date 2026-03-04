@@ -117,6 +117,9 @@ TOOLS.md
 USER.md
 juick/
 
+# Internal documentation
+RELEASE_GUIDE.md
+
 # OS generated files
 .DS_Store
 .DS_Store?

@@ -8,9 +8,22 @@ set -e
 echo "🔍 Checking CI status before release..."
 echo "======================================"
 
-# Get repository info
-REPO_OWNER="aibot505"
-REPO_NAME="openclaw-email-channel"
+# Get repository info from git remote
+REPO_URL=$(git remote get-url origin 2>/dev/null || echo "")
+if [ -z "$REPO_URL" ]; then
+    echo "❌ Not in a git repository or no remote origin configured."
+    exit 1
+fi
+
+# Extract owner and repo from URL (handles both HTTPS and SSH)
+if [[ "$REPO_URL" =~ github.com[:/]([^/]+)/([^/.]+) ]]; then
+    REPO_OWNER="${BASH_REMATCH[1]}"
+    REPO_NAME="${BASH_REMATCH[2]%.git}"
+else
+    echo "❌ Could not extract repository info from: $REPO_URL"
+    echo "   Expected format: https://github.com/owner/repo or git@github.com:owner/repo.git"
+    exit 1
+fi
 
 # Check if gh CLI is installed
 if ! command -v gh &> /dev/null; then
