@@ -1,0 +1,39 @@
+{
+  "name": "openclaw-email-channel",
+  "version": "1.0.0",
+  "description": "Email channel plugin for OpenClaw",
+  "main": "email-channel-plugin.js",
+  "scripts": {
+    "start": "node email-channel-plugin.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "imap": "^0.8.19",
+    "mailparser": "^3.6.4",
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "keywords": [
+    "openclaw",
+    "email",
+    "channel",
+    "plugin",
+    "imap",
+    "smtp"
+  ],
+  "author": "OpenClaw Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/openclaw-email-channel"
+  },
+  "bugs": {
+    "url": "https://github.com/openclaw/openclaw-email-channel/issues"
+  },
+  "homepage": "https://github.com/openclaw/openclaw-email-channel#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
